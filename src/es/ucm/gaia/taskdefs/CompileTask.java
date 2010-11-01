@@ -26,7 +26,16 @@ public abstract class CompileTask extends Task
   protected String myLogFile = null;
   protected String myCompilerPath = null;
   protected String myBuildMode;
-  protected boolean isRebuild = true;
+  protected boolean isRebuild = false;
+
+    // Gestión del objetivo clean. Si se especifica rebuild="true", no
+    // se puede indicar clean="true"
+    protected boolean isClean = false;
+
+    // Gestión del objetivo upgrade. Si se especifica upgrade="true", no
+    // se compilará/limpiará el proyecto, por lo que ni rebuild ni
+    // clean se podrán utilizar.
+    protected boolean isUpgrade = false;
 
   //constants...
   protected String cFailureMessage;
@@ -112,7 +121,22 @@ public abstract class CompileTask extends Task
   //----------------------------------------
   public void setRebuild(boolean theFlag)
   {
+    if ((isClean == true) || (isUpgrade == true)) throw new BuildException("Clean and upgrade options are not compatible with rebuild.");
     isRebuild = theFlag;
+  }
+
+  //----------------------------------------
+  public void setClean(boolean theFlag)
+  {
+    if ((isRebuild == true) || (isUpgrade == true)) throw new BuildException("Rebuild and upgrade options are not compatible with clean.");
+    isClean = theFlag;
+  }
+
+  //----------------------------------------
+  public void setUpgrade(boolean theFlag)
+  {
+    if ((isRebuild == true) || (isClean == true)) throw new BuildException("Clean and rebuild options are not compatible with upgrade.");
+    isUpgrade = theFlag;
   }
 
   //----------------------------------------
@@ -258,11 +282,11 @@ public abstract class CompileTask extends Task
       // Miramos si existe devenv.exe
       String devenv = myCompilerFolder + java.io.File.separator + "devenv.exe";
       String express = myCompilerFolder + java.io.File.separator + "vcexpress.exe";
-      log("Buscando " + devenv, Project.MSG_WARN);
-      log("y buscando " + express, Project.MSG_WARN);
+      //log("Buscando " + devenv, Project.MSG_WARN);
+      //log("y buscando " + express, Project.MSG_WARN);
       if ((new java.io.File(devenv)).exists()) {
 	  cCompilerExe = "devenv.exe";
-	  log("visual encontrado", Project.MSG_WARN);
+	  //log("visual encontrado", Project.MSG_WARN);
       } else if (new java.io.File(express).exists()) {
 	  cCompilerExe = "vcexpress.exe";
       } else {

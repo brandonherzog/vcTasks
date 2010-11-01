@@ -5,20 +5,20 @@ import org.apache.tools.ant.types.*;
 import org.apache.tools.ant.*;
 
 //----------------------------------------
-public class VC7 extends CompileTask
+public class VC10 extends CompileTask
   {
-  public VC7()
+  public VC10()
   {
-     cFailureMessage = "*** VC7 failed ***";
+     cFailureMessage = "*** VC10 failed ***";
      cProjectFileExtension = ".sln";
-     cProjectRootFolderPropertyName = "VC7_ROOT";
+     cProjectRootFolderPropertyName = "VC10_ROOT";
 
-     cLogFilePropertyName = "VC7LOGFILE";
+     cLogFilePropertyName = "VC10LOGFILE";
      cDefaultLogFile = "logfile.txt";
 
-     cCompilerFolderPropertyName = "VC7COMPILERFOLDER";
+     cCompilerFolderPropertyName = "VC10COMPILERFOLDER";
      cCompilerExe = "devenv.com";
-     cBuildModePropertyName = "VC7BUILDMODE";
+     cBuildModePropertyName = "VC10BUILDMODE";
   }
 
   //----------------------------------------
@@ -31,13 +31,19 @@ public class VC7 extends CompileTask
       //the output log file for any error messages
       commandLine.createArgument().setLine("/out " + myLogFile);
 
-      if (isRebuild)
-        commandLine.createArgument().setLine("/rebuild ");
-      else
-        commandLine.createArgument().setLine("/build ");
+      if (isUpgrade)
+	  commandLine.createArgument().setLine("/upgrade");
+      else {
+          if (isClean)
+             commandLine.createArgument().setLine("/clean ");
+          else if (isRebuild)
+             commandLine.createArgument().setLine("/rebuild ");
+          else
+            commandLine.createArgument().setLine("/build ");
 
-      //switch indicating which project to build
-      commandLine.createArgument().setLine(myBuildMode + " ");
+          //switch indicating which project to build
+          commandLine.createArgument().setLine(myBuildMode + " ");
+      }
 
       //the fully qualified path to the project file
       Path p = new Path(getProject());
@@ -51,9 +57,9 @@ public class VC7 extends CompileTask
   //-- intenta encontrar el lugar donde está el compilador
   //-- utilizando la variable de entorno correspondiente
   protected String guessCompilerFolder() {
-    String vcCommon = System.getenv("VS70COMNTOOLS");
+    String vcCommon = System.getenv("VS100COMNTOOLS");
     if ((vcCommon == null) || (vcCommon == "")) {
-	log("VS70COMNTOOLS not set. Task rely on the PATH for finding Visual Studio tools (and we assume the complete edition, not the Express one).", Project.MSG_WARN);
+	log("VS100COMNTOOLS not set. Task rely on the PATH for finding Visual Studio tools (and we assume the complete edition, not the Express one).", Project.MSG_WARN);
 	return "";
     }
 

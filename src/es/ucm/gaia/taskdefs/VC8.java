@@ -31,13 +31,20 @@ public class VC8 extends CompileTask
       //the output log file for any error messages
       commandLine.createArgument().setLine("/out " + myLogFile);
 
-      if (isRebuild)
-        commandLine.createArgument().setLine("/rebuild ");
-      else
-        commandLine.createArgument().setLine("/build ");
+      if (isUpgrade)
+	  commandLine.createArgument().setLine("/upgrade");
+      else {
 
-      //switch indicating which project to build
-      commandLine.createArgument().setLine(myBuildMode + " ");
+          if (isClean)
+             commandLine.createArgument().setLine("/clean ");
+          else if (isRebuild)
+             commandLine.createArgument().setLine("/rebuild ");
+          else
+            commandLine.createArgument().setLine("/build ");
+
+          //switch indicating which project to build
+          commandLine.createArgument().setLine(myBuildMode + " ");
+      }
 
       //the fully qualified path to the project file
       Path p = new Path(getProject());
