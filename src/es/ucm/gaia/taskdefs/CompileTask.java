@@ -275,17 +275,17 @@ public abstract class CompileTask extends Task
   {
       // Si no tenemos directorio, asumimos devenv.exe
       if (myCompilerFolder.equals("")) {
-	  cCompilerExe = "devenv.exe";
+	  cCompilerExe = "devenv.com";
 	  return;
       }
 
       // Miramos si existe devenv.exe
-      String devenv = myCompilerFolder + java.io.File.separator + "devenv.exe";
+      String devenv = myCompilerFolder + java.io.File.separator + "devenv.com";
       String express = myCompilerFolder + java.io.File.separator + "vcexpress.exe";
       //log("Buscando " + devenv, Project.MSG_WARN);
       //log("y buscando " + express, Project.MSG_WARN);
       if ((new java.io.File(devenv)).exists()) {
-	  cCompilerExe = "devenv.exe";
+	  cCompilerExe = "devenv.com";
 	  //log("visual encontrado", Project.MSG_WARN);
       } else if (new java.io.File(express).exists()) {
 	  cCompilerExe = "vcexpress.exe";
@@ -328,7 +328,6 @@ public abstract class CompileTask extends Task
   {
     Commandline commandLine = buildCommandLine(theFullpath);
     log("Command= " + commandLine.toString());
-
     try
     {
       runCommand(commandLine, theFullpath);
