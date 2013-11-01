@@ -10,6 +10,8 @@ Author: Marco Antonio Gomez Martin
 HISTORY OF CHANGES
 ===
 
+- v1.3: Added support for Visual Studio 2012
+
 - v1.2: During the compilation process, ant shows Visual Studio
   output. Previous version keeps that information just in the log file.
 
