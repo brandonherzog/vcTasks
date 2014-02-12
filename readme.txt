@@ -6,9 +6,13 @@ Created using those available in http://jtaskdefs.sourceforge.net/.
 
 Author: Marco Antonio Gomez Martin
 
+Contributors: Brandon Herzog
+
 ===
 HISTORY OF CHANGES
 ===
+
+- v1.4: Added ant build script and support for Visual Studio 2013
 
 - v1.3: Added support for Visual Studio 2012
 
@@ -18,3 +22,10 @@ HISTORY OF CHANGES
 - v1.1: Added support for Visual Studio 2010
 
 - v1.0: Initial release
+
+===
+LICENSE
+===
+
+GNU General Public License
+http://www.gnu.org/licenses/gpl.txt
