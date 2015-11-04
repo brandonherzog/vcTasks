@@ -12,6 +12,8 @@ Contributors: Brandon Herzog
 HISTORY OF CHANGES
 ===
 
+- v1.5: Added support for Visual Studio 2015
+
 - v1.4: Added ant build script and support for Visual Studio 2013
 
 - v1.3: Added support for Visual Studio 2012
